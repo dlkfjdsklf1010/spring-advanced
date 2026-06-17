@@ -25,6 +25,7 @@ public class TodoService {
     private final TodoRepository todoRepository;
     private final WeatherClient weatherClient;
 
+    @Transactional
     public TodoSaveResponse saveTodo(AuthUser authUser, TodoSaveRequest todoSaveRequest) {
         User user = User.fromAuthUser(authUser);
 
@@ -34,8 +35,8 @@ public class TodoService {
                 todoSaveRequest.getTitle(),
                 todoSaveRequest.getContents(),
                 weather,
-                user
-        );
+                user);
+
         Todo savedTodo = todoRepository.save(newTodo);
 
         return new TodoSaveResponse(
